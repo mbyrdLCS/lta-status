@@ -1,0 +1,9 @@
+# Keep sensitive files out of the public status page repo
+proposal.*
+response-to-will.txt
+status/upload-status.sh
+*.pdf
+*.env
+*.env.*
+.claude/
+node_modules/
