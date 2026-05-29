@@ -327,7 +327,7 @@ function render(d) {
 }
 
 // Load data
-fetch('lta-status-data.json').catch(() => fetch('data.json'))
+fetch('data.json')
   .then(r => r.json())
   .then(render)
   .catch(() => {
