@@ -1,0 +1,112 @@
+{
+  "lastUpdated": "May 28, 2026",
+  "status": {
+    "state": "waiting",
+    "title": "Waiting on Credentials to Begin",
+    "detail": "Project approved. Discovery phase starts as soon as we receive API keys and account access."
+  },
+  "kpis": {
+    "hoursUsed": 0,
+    "discoveryHours": 0,
+    "discoveryTotal": 5,
+    "phase1Percent": 0,
+    "rolloutWeek": 0
+  },
+  "waitingOn": [
+    { "item": "Cloudbeds API key", "detail": "Generate from your Cloudbeds dashboard (Settings > Apps & Marketplace)" },
+    { "item": "Stripe API keys", "detail": "From your existing Stripe account (Developers > API Keys)" },
+    { "item": "Quo account access", "detail": "So we can configure call forwarding" },
+    { "item": "TTLock setup", "detail": "We'll walk you through developer account registration" },
+    { "item": "Email + credit card", "detail": "For third-party accounts (Retell, Claude API, hosting) in LTA Suites' name" },
+    { "item": "TTLock gateway confirmation", "detail": "Are Wi-Fi gateways (G2) installed at each lock, or just the locks?" },
+    { "item": "Rates, policies, FAQ content", "detail": "For the AI knowledge base" },
+    { "item": "A test room", "detail": "For pilot phase (Week 3)" }
+  ],
+  "discovery": [
+    { "task": "Test Cloudbeds API — pull reservations, guests, verify write access", "status": "todo" },
+    { "task": "Test TTLock API — create/delete passcodes remotely via gateway", "status": "todo" },
+    { "task": "Set up Retell AI — voice agent with Claude, test call quality", "status": "todo" },
+    { "task": "Test Quo call forwarding — verify caller ID passes through", "status": "todo" },
+    { "task": "Test Stripe Payment Links API — create link, verify webhook", "status": "todo" }
+  ],
+  "coreSystem": [
+    { "task": "AI Phone Answering — 24/7 human-sounding voice agent", "status": "todo" },
+    { "task": "AI SMS Conversations — text-based AI on same number", "status": "todo" },
+    { "task": "Spanish language support with auto-detection", "status": "todo" },
+    { "task": "Dynamic tone by time of day", "status": "todo" },
+    { "task": "A/B voice testing (2-3 voices for you to compare)", "status": "todo" },
+    { "task": "FAQ & troubleshooting (AC, WiFi, hot water, TV)", "status": "todo" },
+    { "task": "Escalation to staff for emergencies, legal, complex issues", "status": "todo" }
+  ],
+  "extensionFlow": [
+    { "task": "Guest calls > AI verifies identity", "status": "todo" },
+    { "task": "AI calculates quote from your rates", "status": "todo" },
+    { "task": "Stripe payment link generated & texted", "status": "todo" },
+    { "task": "Cloudbeds reservation auto-updated", "status": "todo" },
+    { "task": "TTLock generates new door code", "status": "todo" },
+    { "task": "New code texted to guest", "status": "todo" }
+  ],
+  "crm": [
+    { "task": "Auto-match calls/texts to guest records by phone number", "status": "todo" },
+    { "task": "Call recordings + transcripts on guest profile", "status": "todo" },
+    { "task": "Staff notes — timestamped, per person", "status": "todo" },
+    { "task": "Guest segments: A-List / Salad / Still At LTA / Blacklist", "status": "todo" },
+    { "task": "Contact fields: name, phone, secondary phone, important info, status", "status": "todo" },
+    { "task": "Emergency contact, vehicle/plate, pet registration fields", "status": "todo" }
+  ],
+  "marketing": [
+    { "task": "SMS + email campaigns with spintax", "status": "todo" },
+    { "task": "MMS support (images/flyers)", "status": "todo" },
+    { "task": "Custom coupon codes per segment", "status": "todo" },
+    { "task": "Re-engagement campaigns (60/90/180 day dormant)", "status": "todo" },
+    { "task": "Birthday/anniversary auto-specials", "status": "todo" },
+    { "task": "TCPA-compliant opt-in/opt-out", "status": "todo" }
+  ],
+  "commsAutomation": [
+    { "task": "Welcome text/email at check-in (WiFi, amenities, hours)", "status": "todo" },
+    { "task": "Check-out reminders (day before + morning of) with extend option", "status": "todo" },
+    { "task": "Package delivery notifications", "status": "todo" },
+    { "task": "Guest-chosen PINs for TTLock", "status": "todo" },
+    { "task": "Voicemail fallback via Quo if system is down", "status": "todo" }
+  ],
+  "dashboard": [
+    { "task": "Live call log with transcripts & recordings", "status": "todo" },
+    { "task": "Extension tracker (real-time status)", "status": "todo" },
+    { "task": "Guest database with search & segmentation", "status": "todo" },
+    { "task": "Staff task queue", "status": "todo" },
+    { "task": "Campaign manager", "status": "todo" },
+    { "task": "Policy editor (rates, fees, hours)", "status": "todo" },
+    { "task": "Provider health monitor", "status": "todo" },
+    { "task": "Audit log", "status": "todo" },
+    { "task": "Auto reports emailed to Will & Sam", "status": "todo" }
+  ],
+  "deployment": [
+    { "task": "Hosting setup (Railway)", "status": "todo" },
+    { "task": "6-week phased rollout", "status": "todo" },
+    { "task": "Staff training on dashboard", "status": "todo" }
+  ],
+  "hoursLog": [],
+  "rollout": [
+    { "week": 1, "phase": "Internal Build", "detail": "System deployed, all features tested on mock data. Dashboard live for staff review.", "status": "upcoming" },
+    { "week": 2, "phase": "PMS Connected", "detail": "Cloudbeds connected — real guest and reservation data flowing into dashboard.", "status": "upcoming" },
+    { "week": 3, "phase": "Payment + Lock Pilot", "detail": "Stripe and TTLock wired up. Full extension flow tested on 1-2 staff reservations.", "status": "upcoming" },
+    { "week": 4, "phase": "After-Hours AI", "detail": "AI answers calls outside office hours only. Staff reviews every AI call the next morning.", "status": "upcoming" },
+    { "week": 5, "phase": "24/7 AI", "detail": "AI handles all calls around the clock. Staff monitors escalation rate and call quality.", "status": "upcoming" },
+    { "week": 6, "phase": "Marketing Launch", "detail": "First A-List campaign goes out. Owner approves each campaign before it sends.", "status": "upcoming" }
+  ],
+  "phase2": [
+    "Dynamic coupon flyer/image generation per recipient",
+    "Referral program with tracking (\"refer a friend, both get $X off\")",
+    "Automated Google/Yelp review requests with sentiment-aware routing",
+    "Website booking/payment portal (book and pay without calling)",
+    "Background checks at point of booking",
+    "Automated late-fee assessment",
+    "Digital rules & regulations with e-signature",
+    "ID scan / driver's license capture via phone camera",
+    "Maintenance portal with photo/video upload",
+    "Housekeeping management (turnover, checklists, ready-for-guest status)",
+    "Damage reports (pre/post-stay photos for deposit disputes)",
+    "Remote showings with camera and key locker system",
+    "Loyalty/gamification program"
+  ]
+}

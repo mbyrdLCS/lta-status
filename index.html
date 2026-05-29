@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LTA Suites — Project Status</title>
+<style>
+  :root {
+    --blue: #1a56db;
+    --blue-light: #eff6ff;
+    --blue-dark: #1e3a5f;
+    --green: #059669;
+    --green-light: #ecfdf5;
+    --yellow: #d97706;
+    --yellow-light: #fffbeb;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --gray: #6b7280;
+    --gray-light: #f9fafb;
+    --gray-border: #e5e7eb;
+    --purple: #7c3aed;
+    --purple-light: #f3e8ff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: #1a1a1a; background: #f3f4f6; line-height: 1.6;
+  }
+  .header {
+    background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+    color: white; padding: 40px 24px; text-align: center;
+  }
+  .header h1 { font-size: 28px; margin-bottom: 4px; }
+  .header .subtitle { font-size: 16px; opacity: 0.85; }
+  .header .last-updated { margin-top: 16px; font-size: 13px; opacity: 0.7; }
+  .container { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+  .status-banner {
+    background: white; border-radius: 12px; padding: 24px; margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08); display: flex; align-items: center; gap: 16px;
+  }
+  .status-dot {
+    width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0;
+  }
+  .status-dot.waiting { background: var(--yellow); animation: pulse 2s infinite; }
+  .status-dot.active { background: var(--green); animation: pulse 1.5s infinite; }
+  .status-dot.complete { background: var(--green); }
+  .status-dot.blocked { background: var(--red); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .status-text { font-size: 18px; font-weight: 600; }
+  .status-detail { font-size: 14px; color: var(--gray); }
+  .card {
+    background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .card h2 {
+    font-size: 18px; color: var(--blue-dark); margin-bottom: 16px;
+    padding-bottom: 8px; border-bottom: 2px solid var(--blue);
+  }
+  .card h3 { font-size: 15px; color: var(--blue-dark); margin: 16px 0 8px; }
+  .progress-container { margin-bottom: 20px; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px; }
+  .progress-bar { height: 10px; background: var(--gray-light); border-radius: 5px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--green)); border-radius: 5px; transition: width 0.5s ease; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .kpi { background: var(--gray-light); border-radius: 8px; padding: 16px; text-align: center; }
+  .kpi-value { font-size: 28px; font-weight: 700; color: var(--blue); }
+  .kpi-label { font-size: 12px; color: var(--gray); margin-top: 2px; }
+  .checklist { list-style: none; }
+  .checklist li {
+    padding: 10px 0; border-bottom: 1px solid var(--gray-border);
+    display: flex; align-items: flex-start; gap: 10px; font-size: 14px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check {
+    width: 22px; height: 22px; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; flex-shrink: 0; font-size: 12px; font-weight: bold;
+  }
+  .check.done { background: var(--green-light); color: var(--green); }
+  .check.waiting { background: var(--yellow-light); color: var(--yellow); }
+  .check.todo { background: var(--gray-light); color: var(--gray); border: 2px solid var(--gray-border); }
+  .check.blocked { background: var(--red-light); color: var(--red); }
+  .check.in-progress { background: var(--blue-light); color: var(--blue); }
+  .tag {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 11px; font-weight: 600; margin-left: 6px;
+  }
+  .tag.done { background: var(--green-light); color: var(--green); }
+  .tag.in-progress { background: var(--blue-light); color: var(--blue); }
+  .tag.waiting { background: var(--yellow-light); color: var(--yellow); }
+  .tag.blocked { background: var(--red-light); color: var(--red); }
+  .tag.phase2 { background: var(--purple-light); color: var(--purple); }
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 8px; top: 0; bottom: 0;
+    width: 2px; background: var(--gray-border);
+  }
+  .timeline-item { position: relative; padding: 12px 0; }
+  .timeline-item::before {
+    content: ''; position: absolute; left: -24px; top: 18px;
+    width: 12px; height: 12px; border-radius: 50%; background: var(--gray-border);
+  }
+  .timeline-item.done::before { background: var(--green); }
+  .timeline-item.current::before { background: var(--blue); box-shadow: 0 0 0 4px var(--blue-light); }
+  .timeline-item.upcoming::before { background: var(--gray-border); }
+  .timeline-date { font-size: 12px; color: var(--gray); }
+  .timeline-text { font-size: 14px; }
+  .hours-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .hours-table th {
+    text-align: left; padding: 10px 12px; background: var(--blue);
+    color: white; font-weight: 600; font-size: 13px;
+  }
+  .hours-table td { padding: 10px 12px; border-bottom: 1px solid var(--gray-border); }
+  .hours-table tr:nth-child(even) td { background: var(--gray-light); }
+  .hours-table .total td { font-weight: 700; background: var(--blue-light); border-top: 2px solid var(--blue); }
+  .waiting-list { list-style: none; }
+  .waiting-list li {
+    padding: 10px 12px; margin-bottom: 8px; background: var(--yellow-light);
+    border-left: 4px solid var(--yellow); border-radius: 0 6px 6px 0; font-size: 14px;
+  }
+  .phase2-list { list-style: none; }
+  .phase2-list li {
+    padding: 8px 0; border-bottom: 1px solid var(--gray-border);
+    font-size: 14px; display: flex; align-items: center; gap: 8px;
+  }
+  .phase2-list li:last-child { border-bottom: none; }
+  .phase2-list .bullet { width: 8px; height: 8px; border-radius: 50%; background: var(--purple); flex-shrink: 0; }
+  .footer { text-align: center; padding: 32px 16px; color: var(--gray); font-size: 13px; }
+  .empty-hours { text-align: center; color: var(--gray); padding: 24px; }
+  @media (max-width: 600px) {
+    .header h1 { font-size: 22px; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .status-banner { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>LTA Suites — AI System</h1>
+  <div class="subtitle">Project Status Dashboard</div>
+  <div class="last-updated" id="lastUpdated"></div>
+</div>
+
+<div class="container">
+  <div class="status-banner" id="statusBanner"></div>
+  <div class="kpi-grid" id="kpiGrid"></div>
+
+  <div class="card">
+    <h2>Overall Progress</h2>
+    <div id="progressBars"></div>
+  </div>
+
+  <div class="card" id="waitingCard">
+    <h2>Waiting On LTA Suites</h2>
+    <ul class="waiting-list" id="waitingList"></ul>
+  </div>
+
+  <div class="card">
+    <h2>Phase 1 — What We're Building <span class="tag in-progress">Current Phase</span></h2>
+    <h3>Discovery (5 hours, no charge if not feasible)</h3>
+    <ul class="checklist" id="discoveryList"></ul>
+    <h3>Core System</h3>
+    <ul class="checklist" id="coreList"></ul>
+    <h3>Automated Stay Extension Flow</h3>
+    <ul class="checklist" id="extensionList"></ul>
+    <h3>CRM (replaces Monday.com)</h3>
+    <ul class="checklist" id="crmList"></ul>
+    <h3>Guest Marketing</h3>
+    <ul class="checklist" id="marketingList"></ul>
+    <h3>Communication Automation</h3>
+    <ul class="checklist" id="commsList"></ul>
+    <h3>Admin Dashboard</h3>
+    <ul class="checklist" id="dashboardList"></ul>
+    <h3>Deployment</h3>
+    <ul class="checklist" id="deploymentList"></ul>
+  </div>
+
+  <div class="card">
+    <h2>Hours Log</h2>
+    <table class="hours-table">
+      <thead>
+        <tr><th>Date</th><th>Hours</th><th>Work Performed</th><th>Category</th></tr>
+      </thead>
+      <tbody id="hoursBody"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>6-Week Rollout Plan</h2>
+    <div class="timeline" id="rolloutTimeline"></div>
+  </div>
+
+  <div class="card">
+    <h2>Phase 2 — Future Enhancements <span class="tag phase2">$150/hr</span></h2>
+    <p style="font-size: 14px; color: var(--gray); margin-bottom: 16px;">These will be tackled after Phase 1 is live and stable. Prioritized together based on your needs.</p>
+    <ul class="phase2-list" id="phase2List"></ul>
+  </div>
+
+  <div class="card">
+    <h2>Investment Summary</h2>
+    <table class="hours-table">
+      <thead><tr><th>Item</th><th>Cost</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Phase 1 — Build + 6-week rollout</td>
+          <td><strong>$5,500</strong> (one-time)</td>
+          <td><span class="tag waiting">Not billed until complete</span></td>
+        </tr>
+        <tr>
+          <td>Monthly maintenance (3 hrs included)</td>
+          <td><strong>$100/mo</strong></td>
+          <td><span class="tag waiting">Starts after go-live</span></td>
+        </tr>
+        <tr>
+          <td>Phase 2 enhancements</td>
+          <td><strong>$150/hr</strong></td>
+          <td><span class="tag phase2">After Phase 1</span></td>
+        </tr>
+        <tr>
+          <td>Third-party services (Retell, Claude, hosting)</td>
+          <td>~$100-260/mo</td>
+          <td><span class="tag waiting">LTA pays directly</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="footer">
+  Ba iphones LLC — Custom AI Solutions<br>
+  Questions? Contact Mike directly.
+</div>
+
+<script>
+const statusIcons = {
+  done: '&#10003;',
+  'in-progress': '&#9679;',
+  waiting: '&#9679;',
+  blocked: '&#10007;',
+  todo: ''
+};
+
+function renderChecklist(containerId, items) {
+  const ul = document.getElementById(containerId);
+  ul.innerHTML = items.map(i =>
+    `<li><span class="check ${i.status}">${statusIcons[i.status] || ''}</span>${i.task}</li>`
+  ).join('');
+}
+
+function render(d) {
+  // Last updated
+  document.getElementById('lastUpdated').textContent = 'Last updated: ' + d.lastUpdated;
+
+  // Status banner
+  document.getElementById('statusBanner').innerHTML = `
+    <div class="status-dot ${d.status.state}"></div>
+    <div>
+      <div class="status-text">${d.status.title}</div>
+      <div class="status-detail">${d.status.detail}</div>
+    </div>`;
+
+  // KPIs
+  document.getElementById('kpiGrid').innerHTML = `
+    <div class="kpi"><div class="kpi-value">${d.kpis.hoursUsed}</div><div class="kpi-label">Hours Used</div></div>
+    <div class="kpi"><div class="kpi-value">${d.kpis.discoveryHours} / ${d.kpis.discoveryTotal}</div><div class="kpi-label">Discovery Hours</div></div>
+    <div class="kpi"><div class="kpi-value">${d.kpis.phase1Percent}%</div><div class="kpi-label">Phase 1 Complete</div></div>
+    <div class="kpi"><div class="kpi-value">Week ${d.kpis.rolloutWeek}</div><div class="kpi-label">of 6-Week Rollout</div></div>`;
+
+  // Progress bars
+  const rolloutPct = Math.round((d.kpis.rolloutWeek / 6) * 100);
+  document.getElementById('progressBars').innerHTML = `
+    <div class="progress-container">
+      <div class="progress-label"><span>Phase 1 Build</span><span>${d.kpis.phase1Percent}%</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${d.kpis.phase1Percent}%"></div></div>
+    </div>
+    <div class="progress-container">
+      <div class="progress-label"><span>6-Week Rollout</span><span>${d.kpis.rolloutWeek > 0 ? 'Week ' + d.kpis.rolloutWeek + ' of 6' : 'Not started'}</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${rolloutPct}%"></div></div>
+    </div>`;
+
+  // Waiting on client
+  const waitingCard = document.getElementById('waitingCard');
+  if (d.waitingOn.length === 0) {
+    waitingCard.style.display = 'none';
+  } else {
+    document.getElementById('waitingList').innerHTML = d.waitingOn.map(w =>
+      `<li><strong>${w.item}</strong> — ${w.detail}</li>`
+    ).join('');
+  }
+
+  // Checklists
+  renderChecklist('discoveryList', d.discovery);
+  renderChecklist('coreList', d.coreSystem);
+  renderChecklist('extensionList', d.extensionFlow);
+  renderChecklist('crmList', d.crm);
+  renderChecklist('marketingList', d.marketing);
+  renderChecklist('commsList', d.commsAutomation);
+  renderChecklist('dashboardList', d.dashboard);
+  renderChecklist('deploymentList', d.deployment);
+
+  // Hours log
+  const hoursBody = document.getElementById('hoursBody');
+  if (d.hoursLog.length === 0) {
+    hoursBody.innerHTML = `
+      <tr><td colspan="4" class="empty-hours">No hours logged yet — waiting on credentials to begin discovery</td></tr>
+      <tr class="total"><td>Total</td><td>0</td><td></td><td></td></tr>`;
+  } else {
+    const total = d.hoursLog.reduce((s, h) => s + h.hours, 0);
+    hoursBody.innerHTML = d.hoursLog.map(h =>
+      `<tr><td>${h.date}</td><td>${h.hours}</td><td>${h.work}</td><td>${h.category}</td></tr>`
+    ).join('') +
+      `<tr class="total"><td>Total</td><td>${total}</td><td></td><td></td></tr>`;
+  }
+
+  // Rollout timeline
+  document.getElementById('rolloutTimeline').innerHTML = d.rollout.map(r =>
+    `<div class="timeline-item ${r.status}">
+      <div class="timeline-date">Week ${r.week} — ${r.phase}</div>
+      <div class="timeline-text">${r.detail}</div>
+    </div>`
+  ).join('');
+
+  // Phase 2
+  document.getElementById('phase2List').innerHTML = d.phase2.map(p =>
+    `<li><span class="bullet"></span>${p}</li>`
+  ).join('');
+}
+
+// Load data
+fetch('lta-status-data.json').catch(() => fetch('data.json'))
+  .then(r => r.json())
+  .then(render)
+  .catch(() => {
+    document.getElementById('statusBanner').innerHTML = `
+      <div class="status-dot blocked"></div>
+      <div><div class="status-text">Error loading status data</div></div>`;
+  });
+</script>
+
+</body>
+</html>
