@@ -1,26 +1,24 @@
 {
-  "lastUpdated": "May 28, 2026",
+  "lastUpdated": "June 2, 2026",
   "status": {
-    "state": "waiting",
-    "title": "Waiting on Credentials to Begin",
-    "detail": "Project approved. Discovery phase starts as soon as we receive API keys and account access."
+    "state": "active",
+    "title": "Credentials Coming In — Preparing for Discovery",
+    "detail": "Quo access received. TTLock gateways confirmed. Test room assigned. Waiting on Cloudbeds API key, Stripe keys, and LTA Suites inbox access."
   },
   "kpis": {
     "hoursUsed": 0,
     "discoveryHours": 0,
     "discoveryTotal": 5,
-    "phase1Percent": 0,
+    "phase1Percent": 2,
     "rolloutWeek": 0
   },
   "waitingOn": [
-    { "item": "Cloudbeds API key", "detail": "Generate from your Cloudbeds dashboard (Settings > Apps & Marketplace)" },
-    { "item": "Stripe API keys", "detail": "From your existing Stripe account (Developers > API Keys)" },
-    { "item": "Quo account access", "detail": "So we can configure call forwarding" },
-    { "item": "TTLock setup", "detail": "We'll walk you through developer account registration" },
+    { "item": "Cloudbeds API key", "detail": "Needs admin/owner access — Will may need to generate this" },
+    { "item": "Stripe API keys", "detail": "Checking if existing Stripe account is still connected to Cloudbeds" },
+    { "item": "Quo LTA Suites inbox access", "detail": "Need to be added to the (918) 400-0996 inbox to configure call forwarding" },
+    { "item": "TTLock developer credentials", "detail": "We'll walk you through developer account registration" },
     { "item": "Email + credit card", "detail": "For third-party accounts (Retell, Claude API, hosting) in LTA Suites' name" },
-    { "item": "TTLock gateway confirmation", "detail": "Are Wi-Fi gateways (G2) installed at each lock, or just the locks?" },
-    { "item": "Rates, policies, FAQ content", "detail": "For the AI knowledge base" },
-    { "item": "A test room", "detail": "For pilot phase (Week 3)" }
+    { "item": "Rates, policies, FAQ content", "detail": "Knowledge base template sent — fill in [PLACEHOLDER] tags" }
   ],
   "discovery": [
     { "task": "Test Cloudbeds API — pull reservations, guests, verify write access", "status": "todo" },
