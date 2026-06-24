@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "June 16, 2026",
+  "lastUpdated": "June 24, 2026",
   "status": {
     "state": "active",
     "title": "Credentials Coming In — Preparing for Discovery",
-    "detail": "Quo inbox access confirmed. TTLock gateways confirmed. Test room assigned. Waiting on Cloudbeds API key, Stripe keys, TTLock dev credentials, and email/card for third-party accounts."
+    "detail": "Quo inbox access confirmed. Stripe test keys received. Waiting on Cloudbeds API key and TTLock developer credentials to begin discovery."
   },
   "kpis": {
     "hoursUsed": 0,
@@ -14,7 +14,7 @@
   },
   "waitingOn": [
     { "item": "Cloudbeds API key", "detail": "Needs admin/owner access — Will may need to generate this" },
-    { "item": "Stripe API keys", "detail": "Checking if existing Stripe account is still connected to Cloudbeds" },
+    { "item": "Stripe API keys", "detail": "DONE — Test mode keys received June 24. Live keys needed before go-live." },
     { "item": "Quo LTA Suites inbox access", "detail": "DONE — Added to (918) 400-0996 inbox June 16" },
     { "item": "TTLock developer credentials", "detail": "We'll walk you through developer account registration" },
     { "item": "Email + credit card", "detail": "For third-party accounts (Retell, Claude API, hosting) in LTA Suites' name" },
