@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "June 2, 2026",
+  "lastUpdated": "September 9, 2026",
   "status": {
-    "state": "active",
-    "title": "Credentials Coming In — Preparing for Discovery",
-    "detail": "Quo access received. TTLock gateways confirmed. Test room assigned. Waiting on Cloudbeds API key, Stripe keys, and LTA Suites inbox access."
+    "state": "complete",
+    "title": "Project Closed",
+    "detail": "LTA Suites is pursuing a different direction, so this project wrapped up before the build phase began. No build hours were used. Thanks to Will, Angela, and the LTA Suites team — best of luck!"
   },
   "kpis": {
     "hoursUsed": 0,
@@ -12,16 +12,9 @@
     "phase1Percent": 2,
     "rolloutWeek": 0
   },
-  "waitingOn": [
-    { "item": "Cloudbeds API key", "detail": "Needs admin/owner access — Will may need to generate this" },
-    { "item": "Stripe API keys", "detail": "Checking if existing Stripe account is still connected to Cloudbeds" },
-    { "item": "Quo LTA Suites inbox access", "detail": "Need to be added to the (918) 400-0996 inbox to configure call forwarding" },
-    { "item": "TTLock developer credentials", "detail": "We'll walk you through developer account registration" },
-    { "item": "Email + credit card", "detail": "For third-party accounts (Retell, Claude API, hosting) in LTA Suites' name" },
-    { "item": "Rates, policies, FAQ content", "detail": "Knowledge base template sent — fill in [PLACEHOLDER] tags" }
-  ],
+  "waitingOn": [],
   "discovery": [
-    { "task": "Test Cloudbeds API — pull reservations, guests, verify write access", "status": "todo" },
+    { "task": "Review LTA Suites internal prototype — assess scope and integration points", "status": "todo" },
     { "task": "Test TTLock API — create/delete passcodes remotely via gateway", "status": "todo" },
     { "task": "Set up Retell AI — voice agent with Claude, test call quality", "status": "todo" },
     { "task": "Test Quo call forwarding — verify caller ID passes through", "status": "todo" },

@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "July 2, 2026",
+  "lastUpdated": "September 9, 2026",
   "status": {
-    "state": "active",
-    "title": "Direction Updated — Waiting on Prototype",
-    "detail": "Cloudbeds is being replaced by a custom internal system. LTA Suites team is building a prototype to hand off for completion and integration. Waiting on prototype code and TTLock developer credentials to begin build."
+    "state": "complete",
+    "title": "Project Closed",
+    "detail": "LTA Suites is pursuing a different direction, so this project wrapped up before the build phase began. No build hours were used. Thanks to Will, Angela, and the LTA Suites team — best of luck!"
   },
   "kpis": {
     "hoursUsed": 0,
@@ -12,15 +12,7 @@
     "phase1Percent": 2,
     "rolloutWeek": 0
   },
-  "waitingOn": [
-    { "item": "Cloudbeds API key", "detail": "N/A — Moving away from Cloudbeds. Custom internal system being built instead." },
-    { "item": "Internal system prototype", "detail": "LTA Suites team standing up prototype now — expected by end of next week" },
-    { "item": "Stripe API keys", "detail": "DONE — Test mode keys received June 24. Live keys needed before go-live." },
-    { "item": "Quo LTA Suites inbox access", "detail": "DONE — Added to (918) 400-0996 inbox June 16" },
-    { "item": "TTLock developer credentials", "detail": "Developer account registered — awaiting approval (1-2 business days)" },
-    { "item": "Email + credit card", "detail": "For third-party accounts (Retell, Claude API, hosting) in LTA Suites' name" },
-    { "item": "Rates, policies, FAQ content", "detail": "Knowledge base template sent — fill in [PLACEHOLDER] tags" }
-  ],
+  "waitingOn": [],
   "discovery": [
     { "task": "Review LTA Suites internal prototype — assess scope and integration points", "status": "todo" },
     { "task": "Test TTLock API — create/delete passcodes remotely via gateway", "status": "todo" },
