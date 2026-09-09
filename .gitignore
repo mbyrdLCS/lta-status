@@ -9,6 +9,7 @@ status/upload-status.sh
 node_modules/
 
 # Internal docs, prompts, and client correspondence — never publish
+ARCHIVE.md
 CLAUDE.md
 knowledge-base.md
 retell-system-prompt.md
